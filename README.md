@@ -1,2 +1,2 @@
 # AtCoder
-For posting solutions of solved problems.
+For posting solutions of solved **AtCoder** problems.
