@@ -16,7 +16,7 @@ typedef long long ll;
 typedef pair<int, int> pp;
 
 queue<int> que;
-void Search(int n, vector<list<int>> & d, vector<int> & ans) {
+void Search(int n, vector<list<int>>& d, vector<int>& ans) {
 	for (auto it = d[n].begin(); it != d[n].end(); it++) {
 		if (ans[*it] == INF) {
 			ans[*it] = n + 1;
