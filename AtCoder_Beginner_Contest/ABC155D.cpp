@@ -9,91 +9,49 @@
 #define chmin(x, y) x = min(x, y)
 #define MOD 1000000007
 #define PI 3.14159265358979323846
-#define INF 1ll << 60
+#define INF 1ll << 61
 
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> pp;
 
-ll nC2(ll n) {
-	return (n * (n - 1)) >> 1;
-}
-
-ll Number(vector<ll>& a, vector<ll>& b, ll x) {
-	int i, j = b.size() - 1;
+ll Search(ll n, vector<ll> &d) {
 	ll ans = 0;
-	rep(i, a.size()) {
-		while (j >= 0 && a[i] * b[j] >= x)
-			j--;
-		ans += j + 1;
-	}
-	return ans;
-}
-
-ll Judge(vector<ll>& a, vector<ll>& b, ll x, int p) {
-	int i;
-	ll ans = 0;
-	if (p) {
-		ans = Number(a, a, x);
-		rep(i, a.size()) {
-			if (a[i] * a[i] < x)
-				ans--;
-			else
-				break;
+	for (ll& a : d) {
+		if (a >= 0) {
+			int l = -1, r = d.size();
+			while (l + 1 < r) {
+				int p = (l + r) / 2;
+				a* d[p] <= n ? l = p : r = p;
+			}
+			ans += l + 1;
 		}
-		ans += Number(b, b, x);
-		rep(i, a.size()) {
-			if (a[i] * a[i] < x)
-				ans--;
-			else
-				break;
+		else {
+			int l = -1, r = d.size();
+			while (l + 1 < r) {
+				int p = (l + r) / 2;
+				a* d[p] <= n ? r = p : l = p;
+			}
+			ans += d.size() - r;
 		}
-		ans >>= 1;
+		if (a * a <= n)
+			ans--;
 	}
-	else {
-		ans = Number(a, b, x);
-	}
-	return ans;
-}
-
-ll Search(vector<ll>& a, vector<ll>& b, ll k, int pos, ll l = -INF, ll r = INF) {
-	if (r - l <= 1) {
-		return l;
-	}
-	ll p = (l + r) / 2;
-	if (Judge(a, b, p, pos) < k) {
-		return Search(a, b, k, pos, p, r);
-	}
-	return Search(a, b, k, pos, l, p);
+	return ans / 2;
 }
 
 int main(void) {
-	int num, i, j, k;
-	ll a, ans;
-	vector<ll> neg, pos, zero;
+	int num, i;
+	ll k, l = -INF, r = INF, ans;
 	cin >> num >> k;
-	rep(i, num) {
-		cin >> a;
-		if (a < 0)
-			neg.push_back(a);
-		else if(a > 0)
-			pos.push_back(a);
-		else
-			zero.push_back(a);
+	vector<ll> d(num);
+	rep(i, num)
+		cin >> d[i];
+	sort(d.begin(), d.end());
+	while (l + 1 < r) {
+		ll p = (l + r) / 2;
+		Search(p, d) < k ? l = p : r = p;
 	}
-	if (k <= neg.size() * pos.size()) {
-		sort(neg.begin(), neg.end());
-		sort(pos.begin(), pos.end(), greater<ll>());
-		ans = Search(neg, pos, k, 0);
-	}
-	else if (k > nC2(num) - nC2(pos.size()) - nC2(neg.size())) {
-		k -= nC2(num) - nC2(pos.size()) - nC2(neg.size());
-		sort(neg.begin(), neg.end(), greater<ll>());
-		sort(pos.begin(), pos.end());
-		ans = Search(neg, pos, k, 1, 0);
-	}
-	else
-		ans = 0;
-	cout << ans << "\n";
+	cout << r << "\n";
 	return 0;
 }
