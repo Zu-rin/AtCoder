@@ -16,12 +16,19 @@ typedef long long ll;
 typedef pair<int, int> pp;
 
 int main(void) {
-	int num, i, m, k, l, r, q = 0;
-	cin >> num >> m;
-	if (!(num & 1))
-		num++;
-	for (i = 1; i <= m; i++) {
-		printf("%d %d\n", i, num - i);
+	int i, m, a = 1, b;
+	cin >> b >> m;
+	for (i = m; i > 0; i--) {
+		if (i & 1) {
+			cout << a << " ";
+			cout << a + i << "\n";
+			a++;
+		}
+		else {
+			cout << b << " ";
+			cout << b - i << "\n";
+			b--;
+		}
 	}
 	return 0;
 }
