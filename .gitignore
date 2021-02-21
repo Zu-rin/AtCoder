@@ -8,3 +8,4 @@
 _fileHandlert.bat
 *.exe
 *.pdb
+.vscode/settings.json
