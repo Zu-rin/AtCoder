@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
-#include <cmath>
+#include <list>
+#include <queue>
 #include <algorithm>
 #define rep(i, n) for(i = 0; i < (n); i++)
 #define chmax(x, y) x = max(x, y)
@@ -15,50 +15,37 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pp;
 
-void Fact(ll n, map<ll, int> &mp) {
-    while (!(n & 1)) {
-        mp[2]++;
-        n >>= 1;
-    }
-    for (ll i = 3; i <= sqrt(n); i += 2) {
-        while (n % i == 0) {
-            mp[i]++;
-            n /= i;
-        }
-    }
-    if (n > 1)
-        mp[n]++;
-    return;
+ll Div(ll n) {
+	if (n == 1)
+		return 0;
+	ll i, ans = 1;
+	for (i = 2; i * i < n; i++) {
+		if (n % i == 0)
+			ans += 2;
+	}
+	if (i * i == n)
+		ans++;
+	return ans;
 }
 
-ll Pat(ll n, map<ll, int> &mp) {
-    Fact(n, mp);
-    ll ans = 1;
-    for (auto it = mp.begin(); it != mp.end(); it++) {
-        ans *= (ll)((*it).second + 1);
-    }
-    return ans;
+int Isok(ll n, ll k) {
+	while (n % k == 0)
+		n /= k;
+	return n % k == 1;
 }
 
 int main(void) {
-	ll num, i, ans, ok = true, k = 1;
-    map<ll, int> a, b;
+	ll num, i, ans = 1;
 	cin >> num;
-    ans = Pat(num - 1, b) + 1;
-    Fact(num, a);
-    for (auto s = a.begin(), it = s; it != a.end(); it++) {
-        if ((*s).second == 1 || (*s).second != (*it).second) {
-            ok = false;
-            break;
-        }
-    }
-    if (ok) {
-        for (auto it = a.begin(); it != a.end(); it++) {
-            k *= (ll)(*it).first;
-        }
-        if ((num - 1) % k != 0)
-            ans++;
-    }
-    cout << ans << "\n";
+	ans += Div(num - 1);
+	for (i = 2; i * i < num; i++) {
+		if (num % i == 0) {
+			ans += Isok(num, i);
+			ans += Isok(num, num / i);
+		}
+	}
+	if (i * i == num)
+		ans += Isok(num, i);
+	cout << ans << "\n";
 	return 0;
 }
