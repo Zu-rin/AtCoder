@@ -5,8 +5,7 @@
 /AtCoder.vcxproj.filters
 /AtCoder.vcxproj.user
 /x64
-/_fileHandler.py
-_fileHandlert.bat
 *.exe
 *.pdb
 .vscode/settings.json
+/.venv
