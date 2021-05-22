@@ -9,3 +9,4 @@
 *.pdb
 .vscode/settings.json
 /.venv
+Gemfile*
