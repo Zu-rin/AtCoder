@@ -9,4 +9,5 @@
 *.pdb
 .vscode/settings.json
 /.venv
+/tmp
 Gemfile*

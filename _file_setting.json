@@ -13,5 +13,8 @@
     },
     "Typical":{
         "dir": "Typical_90"
+    },
+    "tmp":{
+        "dir": "tmp"
     }
 }
