@@ -1,0 +1,17 @@
+{
+    "ABC":{
+        "dir": "AtCoder_Beginner_Contest",
+        "subdir?": true
+    },
+    "ARC":{
+        "dir": "AtCoder_Regular_Contest",
+        "subdir?": true
+    },
+    "AGC":{
+        "dir": "AtCoder_Grand_Contest",
+        "subdir?": true
+    },
+    "Typical":{
+        "dir": "Typical_90"
+    }
+}
