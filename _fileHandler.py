@@ -67,7 +67,7 @@ class FileHandler:
     def commit(self, commit_file):
         dir, fname = os.path.split(commit_file)
         fname, fext = os.path.splitext(fname)
-        message = f"solved {fname}"
+        message = f"solved {fname} (Auto-commit by _fileHandler.py)"
         self.console.print("git commit  ", end="", style="yellow")
         self.console.print(f"{commit_file}", style="green")
         self.repo.git.add(commit_file)
