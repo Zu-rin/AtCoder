@@ -7,7 +7,7 @@
 #define rep(i, n) for(i = 0; i < (n); i++)
 #define chmax(x, y) x = max(x, y)
 #define chmin(x, y) x = min(x, y)
-#define MOD 1000000007
+#define MOD 998244353
 #define PI 3.14159265358979323846
 #define INF 1 << 30
 
@@ -16,20 +16,29 @@ typedef long long ll;
 typedef pair<int, int> pp;
 
 int main(void) {
-	int num, i;
-	ll ans = 0, ma = 0;
-	cin >> num;
-	vector<ll> d(num), a(num);
-	rep(i, num)
-		cin >> d[i];
-	a = d;
-	rep(i, num - 1)
-		a[i + 1] += a[i];
-	a.push_back(0);
-	rep(i, num) {
-		chmax(ma, d[i]);
-		cout << a[i] + ma * (i + 1) << "\n";
-		a[i + 1] += a[i];
+	int num, i, h, w;
+	ll ans = 1;
+	cin >> h >> w;
+	vector<string> s(h);
+	rep(i, h)
+		cin >> s[i];
+	rep(i, h + w - 1) {
+		char c = '.';
+		for (int a = max(0, i - w + 1), b = i - a; a < h and 0 <= b; a++, b--) {
+			if (s[a][b] != '.') {
+				if (c == '.')
+					c = s[a][b];
+				else if (c != s[a][b]) {
+					ans = 0;
+					break;
+				}
+			}
+		}
+		if (c == '.') {
+			ans *= 2;
+			ans %= MOD;
+		}
 	}
+	cout << ans << "\n";
 	return 0;
 }
