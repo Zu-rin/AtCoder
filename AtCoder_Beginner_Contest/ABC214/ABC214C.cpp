@@ -26,7 +26,7 @@ int main(void) {
 		if (ans[i] < ans[s])
 			s = i;
 	}
-	for (i = s; (i + 1) % num != s; i++)
+	for (i = s; (i + 1) % num != s; i = (i + 1) % num)
 		chmin(ans[(i + 1) % num], ans[i] + a[i]);
 	rep(i, num)
 		cout << ans[i] << "\n";
