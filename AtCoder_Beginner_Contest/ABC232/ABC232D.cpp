@@ -22,15 +22,20 @@ typedef struct Point_Coordinates {
 int BFS(vector<string>& s) {
 	int ans = 0;
 	queue<point> que;
+	vector<vector<char>> ok(s.size(), vector<char>(s[0].size(), 1));
 	que.push({ 1, 1 });
 	while (que.size()) {
 		point n = que.front();
 		que.pop();
 		chmax(ans, n.i + n.j - 1);
-		if (s[n.i + 1][n.j] == '.')
+		if (s[n.i + 1][n.j] == '.' and ok[n.i + 1][n.j]) {
 			que.push({ n.i + 1, n.j });
-		if (s[n.i][n.j + 1] == '.')
+			ok[n.i + 1][n.j] = 0;
+		}
+		if (s[n.i][n.j + 1] == '.' and ok[n.i][n.j + 1]) {
 			que.push({ n.i, n.j + 1 });
+			ok[n.i + 1][n.j] = 0;
+		}
 	}
 	return ans;
 }
