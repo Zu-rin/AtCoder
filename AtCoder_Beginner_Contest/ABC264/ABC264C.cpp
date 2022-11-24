@@ -18,41 +18,14 @@ typedef long long ll;
 typedef pair<int, int> pp;
 
 int main(void) {
-    int num, i, j, v, h, w;
-    cin >> h >> w;
-    vector<vector<int>> a(h, vector<int>(w, 0));
-    rep(i, h) {
-        rep(j, w) {
-            cin >> a[i][j];
-        }
+    int num, i, ans = 0;
+    string s, a = "atcoder";
+    cin >> s;
+    rep(i, a.size()) {
+        int p = s.find(a[i]);
+        ans += p - i;
+        s = a.substr(0, i + 1) + s.substr(i, p - i) + s.substr(p + 1);
     }
-    cin >> h >> w;
-    vector<vector<int>> b(h, vector<int>(w, 0));
-    rep(i, h) {
-        rep(j, w) {
-            cin >> b[i][j];
-        }
-    }
-    rep(h, 1 << a.size()) {
-        rep(w, 1 << a[0].size()) {
-            vector<vector<int>> x;
-            rep(i, a.size()) {
-                if (h & (1 << i))
-                    continue;
-                vector<int> y;
-                rep(j, a[0].size()) {
-                    if (w & (1 << j))
-                        continue;
-                    y.push_back(a[i][j]);
-                }
-                x.push_back(y);
-            }
-            if (x == b) {
-                printf("Yes\n");
-                return 0;
-            }
-        }
-    }
-    printf("No\n");
+    cout << ans << "\n";
     return 0;
 }
