@@ -18,24 +18,26 @@ typedef long long ll;
 typedef pair<int, int> pp;
 
 int main(void) {
-    int num, q, i, a, b, k;
-    map<int, set<int>> mp;
-    cin >> num >> q;
+    int num, i, k, q;
+    ll a, b, n = -1;
+    cin >> num;
+    vector<ll> d(num);
+    map<int, ll> mp;
+    rep(i, num)
+        cin >> d[i];
+    cin >> q;
     rep(i, q) {
-        cin >> k >> a >> b;
+        cin >> k >> a;
         if (k == 1) {
-            mp[a].insert(b);
+            n = a;
+            mp = map<int, ll>();
         }
         else if (k == 2) {
-            mp[a].erase(b);
+            cin >> b;
+            mp[a] += b;
         }
         else {
-            if (mp[a].find(b) != mp[a].end() and mp[b].find(a) != mp[b].end()) {
-                printf("Yes\n");
-            }
-            else {
-                printf("No\n");
-            }
+            cout << (n < 0 ? d[a - 1] + mp[a] : n + mp[a]) << "\n";
         }
     }
     return 0;
