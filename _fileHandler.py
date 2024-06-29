@@ -46,7 +46,7 @@ class FileHandler:
 
         if num > 0:
             self.console.print(f"\nChanging names of {num} files is success!")
-            self.push_all()
+            # self.push_all()
         else:
             self.console.print("\nNo files changed name.")
 
