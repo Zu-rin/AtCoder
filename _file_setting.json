@@ -1,20 +1,26 @@
 {
-    "ABC":{
-        "dir": "AtCoder_Beginner_Contest",
-        "subdir?": true
+    "author": {
+        "name": "Zu-rin",
+        "email": "zu_rin@team-jj.com"
     },
-    "ARC":{
-        "dir": "AtCoder_Regular_Contest",
-        "subdir?": true
-    },
-    "AGC":{
-        "dir": "AtCoder_Grand_Contest",
-        "subdir?": true
-    },
-    "Typical":{
-        "dir": "Typical_90"
-    },
-    "tmp":{
-        "dir": "tmp"
+    "matching_pattern": {
+        "^(ABC\\d+)[A-Z]\\..+$": {
+            "dir": "AtCoder_Beginner_Contest",
+            "subdir?": true
+        },
+        "^(ARC\\d+)[A-Z]\\..+$": {
+            "dir": "AtCoder_Regular_Contest",
+            "subdir?": true
+        },
+        "^(AGC\\d+)[A-Z]\\..+$": {
+            "dir": "AtCoder_Grand_Contest",
+            "subdir?": true
+        },
+        "Typical":{
+            "dir": "Typical_90"
+        },
+        "tmp":{
+            "dir": "tmp"
+        }
     }
 }
