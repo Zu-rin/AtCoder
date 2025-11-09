@@ -73,7 +73,7 @@ class FileHandler:
 
     def commit(self, commit_file):
         fname = os.path.basename(commit_file)
-        message = f"solved {fname} (Auto-commit by _fileHandler.py)"
+        message = f"solved {fname}"
         author = f"{self.config['author']['name']} <{self.config['author']['email']}>"
         self.console.print("git commit  ", end="", style="yellow")
         self.console.print(f"{commit_file}", style="green")
