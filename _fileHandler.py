@@ -6,17 +6,18 @@ from rich.console import Console
 import git
 
 class FileHandler:
-    def __init__(self, config_file: str, overwrite: bool = False, dryrun: bool = False):
+    def __init__(self, config_file: str, search_target_dir: str = ".", overwrite: bool = False, dryrun: bool = False):
         self.console = Console()
-        self.path  = os.getcwd()
+        self.git_path  = os.getcwd()
+        self.search_target_dir = os.path.join(self.git_path, search_target_dir)
         self.overwrite = overwrite
         self.dryrun = dryrun
         self.console.print("path = ", style="bold", end="", crop=False)
-        self.console.print(self.path,  style="green")
+        self.console.print(self.git_path,  style="green")
         with open(config_file, "r") as f:
             self.config = load(f)
-        self.files = [f for f in os.listdir(self.path) if os.path.isfile(os.path.join(self.path, f))]
-        self.repo = git.Repo(self.path)
+        self.files = sorted([f for f in os.listdir(self.search_target_dir) if os.path.isfile(os.path.join(self.search_target_dir, f))])
+        self.repo = git.Repo(self.git_path)
 
 
     def done(self):
@@ -36,8 +37,8 @@ class FileHandler:
                 subdir = ""
                 if contest.get("subdir?"):
                     subdir = match_key.group(1)
-                oldpath = os.path.join(self.path, file)
-                newpath = os.path.join(self.path, contest_dir, subdir, file)
+                oldpath = os.path.join(self.search_target_dir, file)
+                newpath = os.path.join(self.git_path, contest_dir, subdir, file)
                 self.__move_file(oldpath, newpath)
                 num += 1
                 self.commit(newpath)
@@ -51,7 +52,7 @@ class FileHandler:
     def __make_folders(self, path):
         if not self.dryrun:
             os.makedirs(path, exist_ok=True)
-        self.console.print("Make directory ", end="", style="bold")
+        self.console.print("Directory ", end="", style="bold")
         self.console.print(path, style="green")
 
 
@@ -86,12 +87,14 @@ class FileHandler:
 def main():
     parser = argparse.ArgumentParser(description="File Handler")
     parser.add_argument("--config-file", type=str, help="Path to the rule JSON file", default="_file_setting.json")
+    parser.add_argument("--target-dir", "-d", type=str, help="Target directory", default=".")
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing files")
     parser.add_argument("--dry-run", action="store_true", help="Perform a dry run without making changes")
     args = parser.parse_args()
 
     file_handler = FileHandler(
         config_file=args.config_file,
+        search_target_dir=args.target_dir,
         overwrite=args.overwrite,
         dryrun=args.dry_run
     )

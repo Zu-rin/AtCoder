@@ -1,7 +1,7 @@
 .PHONY: commit
 commit:
-	python _fileHandler.py --overwrite --config-file _file_setting.json
+	python _fileHandler.py --target-dir "." --config-file _file_setting.json
 
-.PHONY: commit-dryrun
-commit-dryrun:
-	python _fileHandler.py --dry-run
+.PHONY: dry-commit
+dry-commit:
+	python _fileHandler.py --target-dir "." --config-file _file_setting.json --dry-run

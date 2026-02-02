@@ -16,7 +16,7 @@
             "dir": "AtCoder_Grand_Contest",
             "subdir?": true
         },
-        "Typical":{
+        "^Typical-\\d+\\..+$":{
             "dir": "Typical_90"
         },
         "tmp":{
