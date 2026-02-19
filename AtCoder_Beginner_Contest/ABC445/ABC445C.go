@@ -86,7 +86,7 @@ func main() {
 		uf.union(i, a[i])
 	}
 	for i := 1; i <= n; i++ {
-		fmt.Print(uf.parent(i), " ")
+		fmt.Fprint(io.Out, uf.parent(i), " ")
 	}
-	fmt.Println()
+	fmt.Fprintln(io.Out)
 }
