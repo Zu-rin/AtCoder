@@ -1,0 +1,106 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+	"strconv"
+)
+
+type Io struct {
+	In  *bufio.Scanner
+	Out *bufio.Writer
+}
+
+func NewIo(r io.Reader, w io.Writer) *Io {
+	const buf = 1 << 20
+	s := bufio.NewScanner(r)
+	s.Split(bufio.ScanWords)
+	s.Buffer(make([]byte, buf), buf)
+	return &Io{
+		In:  s,
+		Out: bufio.NewWriter(w),
+	}
+}
+
+func (io *Io) Text() string {
+	if !io.In.Scan() {
+		panic(io.In.Err())
+	}
+	return io.In.Text()
+}
+
+func (io *Io) NextInt() int {
+	x, err := strconv.Atoi(io.Text())
+	if err != nil {
+		panic(err)
+	}
+	return x
+}
+
+type unionFind struct {
+	n int
+	d []int
+}
+
+func newUnionFind(n int) *unionFind {
+	d := make([]int, n+1)
+	for i := 0; i <= n; i++ {
+		d[i] = i
+	}
+	return &unionFind{
+		n: n,
+		d: d,
+	}
+}
+
+func (uf *unionFind) parent(a int) int {
+	if uf.d[a] == a {
+		return a
+	} else {
+		uf.d[a] = uf.parent(uf.d[a])
+		return uf.d[a]
+	}
+}
+
+func (uf *unionFind) union(a int, b int) {
+	uf.d[uf.parent(b)] = uf.parent(a)
+}
+
+func (uf *unionFind) same(a int, b int) bool {
+	return uf.parent(a) == uf.parent(b)
+}
+
+type pair struct {
+	a, b int
+}
+
+func main() {
+	io := NewIo(os.Stdin, os.Stdout)
+	defer io.Out.Flush()
+	n, m := io.NextInt(), io.NextInt()
+	uf := newUnionFind(n)
+	ed := make([]pair, m)
+	d, e := make(map[int]int), make(map[int]int)
+	for i := 0; i < m; i++ {
+		a, _, b, _ := io.NextInt(), io.Text(), io.NextInt(), io.Text()
+		uf.union(a, b)
+		ed[i] = pair{a, b}
+	}
+	for i := 1; i <= n; i++ {
+		d[uf.parent(i)]++
+	}
+	for i := 0; i < m; i++ {
+		e[uf.parent(ed[i].a)]++
+	}
+	a, b := 0, 0
+	for k, v := range d {
+		if v == e[k] {
+			a++
+		} else {
+			b++
+		}
+	}
+	fmt.Fprintln(io.Out, a, b)
+}
